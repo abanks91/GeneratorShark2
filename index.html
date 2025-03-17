@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="GeneratorShark - AI-powered media gallery for creators">
+    <title>GeneratorShark | AI-Powered Media Gallery</title>
+    <link rel="stylesheet" href="/assets/styles.css">
+
+    <style>
+        :root {
+            --primary-blue: #00AEEF;
+            --dark-navy: #0D1B2A;
+            --silver-gray: #E0E1DD;
+            --neon-purple: #9B5DE5;
+            --alert-red: #FF5A5F;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--dark-navy);
+            color: var(--silver-gray);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1, h2, h3 {
+            color: var(--primary-blue);
+        }
+        
+        .search-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid var(--primary-blue);
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 4px;
+        }
+        
+        button {
+            background-color: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #0090c5;
+        }
+        
+        .tab-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .tab-button {
+            background-color: rgba(0, 174, 239, 0.2);
+            opacity: 0.7;
+            transition: all 0.3s;
+        }
+        
+        .tab-button.active-tab {
+            opacity: 1;
+            box-shadow: 0 0 10px rgba(0, 174, 239, 0.5);
+        }
+        
+        #aiRecommendations {
+            margin-bottom: 20px;
+        }
+        
+        .recommendation-tag {
+            display: inline-block;
+            background-color: rgba(0, 174, 239, 0.2);
+            color: white;
+            padding: 5px 10px;
+            margin: 0 5px 5px 0;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .recommendation-tag:hover {
+            background-color: rgba(0, 174, 239, 0.4);
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .media-item {
+            border: 1px solid var(--primary-blue);
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: rgba(13, 27, 42, 0.7);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        
+        .media-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(0, 174, 239, 0.4);
+        }
+        
+        .media-item img, .media-item video {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+        
+        .media-info {
+            padding: 10px;
+        }
+        
+        .media-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: white;
+            margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .media-source {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.7);
+            margin: 0;
+        }
+        
+        .preview-section {
+            border: 1px solid var(--primary-blue);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            background-color: rgba(13, 27, 42, 0.7);
+            display: none;
+        }
+        
+        .preview-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        @media (min-width: 768px) {
+            .preview-content {
+                flex-direction: row;
+            }
+            
+            .preview-media, .preview-info {
+                width: 50%;
+            }
+        }
+        
+        .preview-media img, .preview-media video {
+            max-width: 100%;
+            max-height: 300px;
+            border: 1px solid var(--primary-blue);
+            border-radius: 4px;
+        }
+        
+        .preview-info p {
+            margin: 5px 0;
+        }
+        
+        .preview-label {
+            color: var(--primary-blue);
+            font-weight: 500;
+        }
+        
+        .use-button {
+            background-color: var(--neon-purple);
+            margin-top: 15px;
+            padding: 12px 20px;
+            font-weight: 500;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 30px;
+        }
+        
+        .spinner {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border: 4px solid rgba(0, 174, 239, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--primary-blue);
+            animation: spin 1s ease-in-out infinite;
+            margin-bottom: 10px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .error-message {
+            color: var(--alert-red);
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>GeneratorShark Media Gallery</h1>
+        
+        <!-- Tab Navigation -->
+        <div class="tab-container">
+            <button class="tab-button active-tab" data-tab="all" aria-pressed="true">
+                All Media
+            </button>
+            <button class="tab-button" data-tab="images" aria-pressed="false">
+                Images
+            </button>
+            <button class="tab-button" data-tab="videos" aria-pressed="false">
+                Videos
+            </button>
+        </div>
+        
+        <!-- Search Bar -->
+        <div class="search-container">
+            <input 
+                type="text" 
+                id="searchQuery" 
+                placeholder="Search for images or videos..." 
+                aria-label="Search media"
+            >
+            <button id="searchButton" aria-label="Search">Search</button>
+        </div>
+        
+        <!-- AI-Powered Recommendations -->
+        <div id="aiRecommendations" aria-live="polite"></div>
+        
+        <!-- Selected Media Preview -->
+        <div id="mediaPreview" class="preview-section">
+            <h3>Selected Media</h3>
+            <div class="preview-content">
+                <div class="preview-media">
+                    <img id="selectedImage" style="display:none;" alt="Selected image preview">
+                    <video id="selectedVideo" controls style="display:none;"></video>
+                </div>
+                <div class="preview-info">
+                    <p><span class="preview-label">Type:</span> <span id="mediaType"></span></p>
+                    <p><span class="preview-label">Title:</span> <span id="mediaTitle"></span></p>
+                    <p><span class="preview-label">Source:</span> <span id="mediaSource"></span></p>
+                    <button
+                        id="useInEditor"
+                        class="use-button"
+                        style="display:none;"
+                        aria-label="Use selected media in editor"
+                    >
+                        Use in Editor
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Gallery -->
+        <div id="gallery" aria-live="polite"></div>
+    </div>
+
+    <!-- Screen Reader Announcer for Accessibility -->
+    <div id="sr-announcer" aria-live="polite" aria-atomic="true" class="sr-only"></div>
+
+    <script src="/assets/script.js" defer></script>
+</body>
+</html>
