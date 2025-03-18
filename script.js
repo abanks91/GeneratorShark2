@@ -1,3 +1,3 @@
 document.addEventListener("DOMContentLoaded", function () {
-    console.log("GeneratorShark Loaded!");
+    console.log("GeneratorShark Cyberpunk UI Loaded!");
 });

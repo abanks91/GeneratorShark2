@@ -1,11 +1,12 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #0f172a;
-    color: white;
+    font-family: 'Orbitron', sans-serif;
+    background-color: #0d1b2a;
+    color: #ffffff;
     text-align: center;
 }
 header h1 {
-    color: #00AEEF;
+    color: #ff007f;
+    text-shadow: 0 0 10px #ff007f;
 }
 nav ul {
     list-style: none;
@@ -16,6 +17,20 @@ nav ul li {
     margin: 0 15px;
 }
 nav ul li a {
-    color: white;
+    color: #00ffee;
     text-decoration: none;
+    text-shadow: 0 0 8px #00ffee;
+}
+button {
+    background: linear-gradient(90deg, #ff007f, #00ffee);
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    color: #000;
+    transition: transform 0.2s ease-in-out;
+}
+button:hover {
+    transform: scale(1.1);
 }
