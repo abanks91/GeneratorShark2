@@ -11,7 +11,7 @@ const app = express();
 const PORT = process.env.PORT || 10000;
 
 // Middleware
-app.use(cors({ origin: 'https://your-vercel-app.vercel.app', credentials: true })); // Allow frontend to access backend
+app.use(cors({ origin: 'https://generatorshark.vercel.app', credentials: true }));
 app.use(express.json());
 
 // Default route
@@ -53,3 +53,4 @@ app.post('/api/video', (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
+// checking to confirm

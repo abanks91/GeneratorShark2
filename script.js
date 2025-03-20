@@ -36,5 +36,5 @@ document.addEventListener("DOMContentLoaded", function () {
     fetchMeme();
 });
 
-// Trigger Vercel redeployment
+// Trigger Vercel redeploy
 
