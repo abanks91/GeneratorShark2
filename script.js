@@ -35,3 +35,6 @@ document.addEventListener("DOMContentLoaded", function () {
     fetchGeneratedText();
     fetchMeme();
 });
+
+// Trigger Vercel redeployment
+
