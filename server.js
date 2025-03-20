@@ -40,8 +40,13 @@ app.get('/api/meme', (req, res) => {
 });
 
 // Route for text generation (Placeholder)
+// Route for AI-generated text (Allows both GET and POST)
+app.get('/api/text', (req, res) => {
+    res.json({ text: "AI-generated text response" });
+});
+
 app.post('/api/text', (req, res) => {
-    res.json({ text: 'AI-generated text response' });
+    res.json({ text: "AI-generated text response" });
 });
 
 // Route for video generation (Placeholder)
